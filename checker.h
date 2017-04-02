@@ -7,6 +7,7 @@ class Checker {
     private:
         size_t size;
         string numbers;
+        bool para;
         void columeMaster();
         void columeSlave(size_t);
         void rowMaster();
