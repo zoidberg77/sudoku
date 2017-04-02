@@ -16,7 +16,7 @@ Checker::Checker()
     cin >> numbers;
     if (numbers.size() != size * size)
         throw runtime_error("something is wrong with the string");
-    cout << "Paralel or not ? (y/n)" << endl;
+    cout << "Parallel or not ? (y/n)" << endl;
     cin >> paras;
     if (paras == "y")
     {
