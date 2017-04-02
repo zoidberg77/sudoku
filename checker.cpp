@@ -1,6 +1,60 @@
 #include "checker.h"
 #include<iostream>
 #include<string>
+#include<set>
+#include<algorithm>
 
 using namespace std;
 
+Checker::Checker() {
+    size_t x {0};
+    cout << "Please enter Sudoku size, for example 9x9 as 9" << endl;
+    //cin >> size;
+    size = 9;
+    cout << "Please enter the Sudoku as string" << endl;
+    //cin >> numbers;
+    numbers = "435269781682571493197834562826195347374682915951743628519326874248957136763418259";
+    if (numbers.size()!=size*size)
+        throw runtime_error("something is wrong with the string");
+}
+void Checker::check() {
+    this->columeMaster();
+    this->rowMaster();
+    this->boxMaster();
+}
+void Checker::columeMaster() {
+    for(size_t i {1};i<size;i++) {
+        this->columeSlave(i);
+    }   
+}
+void Checker::rowMaster() {
+    for(size_t i {1};i<size+1;i++) {
+        this->rowSlave(i);
+    }
+}
+void Checker::boxMaster() {
+    for(size_t i {1};i<size+1;i++) {
+        this->boxSlave(i);
+    }
+}
+void Checker::columeSlave(size_t i) {
+    string temp(1, numbers.at(i));
+    for(size_t c{1};c<size;c++) {temp += numbers.at(i+c*size);}
+    set<char> a(temp.begin(),temp.end());
+    if (a.size()!=size)
+        cout << "error in colume " << i << endl;
+}
+void Checker::rowSlave(size_t i) {
+    string temp = numbers.substr(i*size-size,size);
+    set<char> a(temp.begin(),temp.end());
+    if (a.size()!=size)
+        cout << "error in row " << i << endl;
+}
+void Checker::boxSlave(size_t i) {
+    size_t base = i/(size/3)+1;
+    string temp = numbers.substr(i*(size/3)-(size/3)+(size*(size/3)*base),size/3);
+    for(size_t c{1};c<size/3;c++) {temp += numbers.substr(i*(size/3)-(size/3)+c*size+(size*(size/3)*base),size/3);}
+    set<char> a(temp.begin(),temp.end());
+    if (a.size()!=size)
+        cout << "error in box " << i << endl;
+}

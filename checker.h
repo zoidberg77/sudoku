@@ -7,12 +7,13 @@ class Checker {
     private:
         size_t size;
         string numbers;
+        void columeMaster();
+        void columeSlave(size_t);
+        void rowMaster();
+        void rowSlave(size_t);
+        void boxMaster();
+        void boxSlave(size_t);
     public:
-       Checker();
-       void columeMaster(string);
-       size_t columeSlave(string, size_t);
-       void rowMaser(string);
-       size_t rowSlave(string, size_t);
-       void sectionMaster(string);
-       size_t sectionSlave(string, size_t);
+        Checker();
+        void check();
 };
