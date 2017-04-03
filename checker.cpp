@@ -29,6 +29,7 @@ Checker::Checker()
 }
 void Checker::check()
 {
+    #pragma omp parallel
     this->columeMaster();
     this->rowMaster();
     this->boxMaster();
