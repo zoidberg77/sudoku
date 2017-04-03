@@ -8,46 +8,57 @@ using namespace std;
 
 Checker::Checker()
 {
+    size_t x{0};
     cout << "Please enter Sudoku size, for example 9x9 as 9" << endl;
-    cin >> size;
+    //cin >> size;
+    size = 9;
     cout << "Please enter the Sudoku as string" << endl;
-    cin >> numbers;
+    //cin >> numbers;
+    numbers = "435269781682571493197834562826195347374682915951743628519326874248957136763418259";
     if (numbers.size() != size * size)
         throw runtime_error("something is wrong with the string");
 
 }
 void Checker::check()
 {
-    #pragma omp parallel sections
-    #pragma omp parallel section {
-        this->columeMaster();
-    }
-    #pragma omp parallel section {
-        this->rowMaster();
-    }
-    #pragma omp parallel section{
-        this->boxMaster();
+#pragma omp parallel sections
+    {
+#pragma omp section
+        {
+            this->columeMaster();
+        }
+#pragma omp section
+        {
+            this->rowMaster();
+        }
+#pragma omp section
+        {
+            this->boxMaster();
+        }
     }
 }
 void Checker::columeMaster()
 {
-        for (size_t i = 1; i < size; i++)
-        {
-            this->columeSlave(i);
-        }
+    for (size_t i = 1; i < size; i++)
+    {
+        this->columeSlave(i);
+    }
+}
 void Checker::rowMaster()
 {
-        for (size_t i = 1; i < size+1; i++)
-        {
-            this->rowSlave(i);
-        }
+
+    for (size_t i = 1; i < size + 1; i++)
+    {
+        this->rowSlave(i);
+    }
 }
 void Checker::boxMaster()
 {
-        for (size_t i = 1; i < size+1; i++)
-        {
-            this->boxSlave(i);
-        }
+
+    for (size_t i = 1; i < size + 1; i++)
+    {
+        this->boxSlave(i);
+    }
 }
 void Checker::columeSlave(size_t i)
 {

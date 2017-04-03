@@ -1,1 +1,4 @@
+Sudoku:
 435269781682571493197834562826195347374682915951743628519326874248957136763418259
+Example Command:
+g++ main.cpp -o pmain -fopenmp && g++ main.cpp -o main && ./pmain && ./main
