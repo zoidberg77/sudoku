@@ -25,7 +25,7 @@ void Checker::check()
     {
 #pragma omp section
         {
-            this->columeMaster();
+            this->columnMaster();
         }
 #pragma omp section
         {
@@ -37,11 +37,11 @@ void Checker::check()
         }
     }
 }
-void Checker::columeMaster()
+void Checker::columnMaster()
 {
     for (size_t i = 1; i < size; i++)
     {
-        this->columeSlave(i);
+        this->columnSlave(i);
     }
 }
 void Checker::rowMaster()
@@ -60,7 +60,7 @@ void Checker::boxMaster()
         this->boxSlave(i);
     }
 }
-void Checker::columeSlave(size_t i)
+void Checker::columnSlave(size_t i)
 {
     string temp(1, numbers.at(i));
     for (size_t c{1}; c < size; c++)
@@ -69,7 +69,7 @@ void Checker::columeSlave(size_t i)
     }
     set<char> a(temp.begin(), temp.end());
     if (a.size() != size)
-        cout << "error in colume " << i << endl;
+        cout << "error in column " << i << endl;
 }
 void Checker::rowSlave(size_t i)
 {
