@@ -8,85 +8,46 @@ using namespace std;
 
 Checker::Checker()
 {
-    size_t x{0};
-    string paras;
     cout << "Please enter Sudoku size, for example 9x9 as 9" << endl;
     cin >> size;
     cout << "Please enter the Sudoku as string" << endl;
     cin >> numbers;
     if (numbers.size() != size * size)
         throw runtime_error("something is wrong with the string");
-    cout << "Parallel or not ? (y/n)" << endl;
-    cin >> paras;
-    if (paras == "y")
-    {
-        para = true;
-    }
-    else
-    {
-        para = false;
-    }
+
 }
 void Checker::check()
 {
-    #pragma omp parallel
-    this->columeMaster();
-    this->rowMaster();
-    this->boxMaster();
+    #pragma omp parallel sections
+    #pragma omp parallel section {
+        this->columeMaster();
+    }
+    #pragma omp parallel section {
+        this->rowMaster();
+    }
+    #pragma omp parallel section{
+        this->boxMaster();
+    }
 }
 void Checker::columeMaster()
 {
-    if (!para)
-    {
         for (size_t i = 1; i < size; i++)
         {
             this->columeSlave(i);
         }
-    }
-    else
-    {
-#pragma omp for
-        for (size_t i = 1; i < size; i++)
-        {
-            this->columeSlave(i);
-        }
-    }
-}
 void Checker::rowMaster()
 {
-    if (!para)
-    {
         for (size_t i = 1; i < size+1; i++)
         {
             this->rowSlave(i);
         }
-    }
-    else
-    {
-#pragma omp for
-        for (size_t i = 1; i < size+1; i++)
-        {
-            this->rowSlave(i);
-        }
-    }
 }
 void Checker::boxMaster()
 {
-    if (!para)
-    {
         for (size_t i = 1; i < size+1; i++)
         {
             this->boxSlave(i);
         }
-    }
-    else
-    {
-#pragma omp for
-        for (size_t i = 1; i < size+1; i++)
-        {
-            this->boxSlave(i);
-        }
-    }
 }
 void Checker::columeSlave(size_t i)
 {
