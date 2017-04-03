@@ -7,8 +7,8 @@ class Checker {
     private:
         size_t size;
         string numbers;
-        void columeMaster();
-        void columeSlave(size_t);
+        void columnMaster();
+        void columnSlave(size_t);
         void rowMaster();
         void rowSlave(size_t);
         void boxMaster();
